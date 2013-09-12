@@ -1,4 +1,5 @@
 "use strict";
+var uuid = require("node-uuid");
 
 module.exports = {
   boundary: boundary,
@@ -9,17 +10,17 @@ module.exports = {
 };
 
 function boundary() {
-  // TODO:  create this dynamically
-  return "----WebKitFormBoundaryeKz62fMmh9CAxD7I";
+  return "----FormBoundary-" + uuid.v1();
 }
 
 function body(form, boundary) {
   var body = "";
 
-  // TODO:  validate arguments
+  if (!(form instanceof Object && typeof boundary === "string")) {
+    throw new Error("Invalid arguments to body().  Expecting object and string.");
+  }
 
   for (var input in form) {
-    // TODO:  check hasOwnProperty
     body += "--" + boundary + "\r\n" + "Content-Disposition: form-data; name=\"" + input + "\"\r\n\r\n" + form[input] + "\r\n";
   }
 
@@ -28,17 +29,35 @@ function body(form, boundary) {
 }
 
 function length(body) {
-  // TODO:  validate argument
+  if (!typeof body === "string") {
+    throw new Error("Invalid argument to length().  Expecting string.");
+  }
 
   return Buffer.byteLength(body);
 }
 
 function contentType(boundary) {
-  // TODO:  validate argument
+  if (!typeof boundary === "string") {
+    throw new Error("Invalid argument to contentType().  Expecting string.");
+  }
 
   return "multipart/form-data; boundary=" + boundary;
 }
 
 function create(form) {
-  // TODO:  generate an object containing the headers and body to pass to request
+  if (!form instanceof Object) {
+    throw new Error("Invalid argument to create().  Expecting object.");
+  }
+
+  var _boundary = boundary();
+  var _body = body(form, _boundary);
+  var _contentLength = length(_body);
+  var _contentType = contentType(_boundary);
+
+  return {
+    boundary: _boundary,
+    body: _body,
+    contentLength: _contentLength,
+    contentType: _contentType
+  };
 }

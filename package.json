@@ -1,0 +1,26 @@
+{
+  "name": "trivial-multipart",
+  "version": "0.0.1",
+  "description": "multipart form data (with no file uploads) that works with request",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cjihrig/trivial-multipart.git"
+  },
+  "keywords": [
+    "multipart",
+    "form"
+  ],
+  "author": "Colin J Ihrig <cjihrig@gmail.com> (http://cjihrig.com/)",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/cjihrig/trivial-multipart/issues"
+  },
+  "dependencies": {
+    "node-uuid": "1.4.x"
+  },
+  "devDependencies": {}
+}
